@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Notes</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Clear all</string>
+    <string name="notesadded_notification_title_template">Notes added</string>
+    <string name="action_share">Share</string>
+    <string name="action_reply">Reply</string>
+    <string name="appwidget_text">Notes</string>
+    <string name="add_widget">Add widget</string>
+
+</resources>
