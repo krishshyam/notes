@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.graphics.Typeface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,10 +20,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
 
-    ArrayList<String> notelist = new ArrayList<String>();
 
-    ListView listview;
-    ArrayAdapter<String> arrayadapter;
+    private RecyclerView recyclerview;
+    private MyAdapter madapter;
+    private RecyclerView.LayoutManager mlayoutmanager;
+    ArrayList<String> myDataset = new ArrayList<String>();
+
+
+
     Typeface lato;
     EditText edittext;
     int dbid = 0;
@@ -35,15 +41,21 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        recyclerview=(RecyclerView) findViewById(R.id.recyclerview);
+        //recyclerview.setHasFixedSize(true);
+        mlayoutmanager = new LinearLayoutManager(this);
+        recyclerview.setLayoutManager(mlayoutmanager);
+
+        madapter=new MyAdapter(myDataset);
+        recyclerview.setAdapter(madapter);
+
         edittext = (EditText) findViewById(R.id.editText);
         edittext.clearFocus();
         lato = Typeface.createFromAsset(getAssets(), "fonts/Lato-Regular.ttf");
 
         notedb = new mydb(getApplicationContext());
-        listview = (ListView) findViewById(R.id.notelist);
 
-        arrayadapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, notelist);
-        listview.setAdapter(arrayadapter);
         edittext.setTypeface(lato);
 
 
@@ -71,8 +83,8 @@ public class MainActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            notelist.removeAll(notelist);
-            arrayadapter.notifyDataSetChanged();
+            /*notelist.removeAll(notelist);
+            arrayadapter.notifyDataSetChanged();*/
         }
 
         return super.onOptionsItemSelected(item);
@@ -81,11 +93,14 @@ public class MainActivity extends ActionBarActivity {
     public void populate(View v) {
         edittext = (EditText) findViewById(R.id.editText);
         if (!(edittext.getText().toString().matches(""))) {
-            notelist.add("" + edittext.getText());
+            /*notelist.add("" + edittext.getText());*/
             notedb.createRecords(Integer.toString(dbid), edittext.getText().toString());
+            myDataset.add(dbid,edittext.getText().toString());
             edittext.setText("");
             edittext.clearFocus();
-            arrayadapter.notifyDataSetChanged();
+            madapter=new MyAdapter(myDataset);
+            recyclerview.setAdapter(madapter);
+
 
             notif.notify(getApplicationContext(),edittext.getText().toString(),0);
             dbid++;

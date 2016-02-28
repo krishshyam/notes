@@ -48,14 +48,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.3"
-                android:background="@android:color/holo_orange_light"
-                android:orientation="horizontal">
+                android:background="#424242"
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp">
 
-                <ListView
-                    android:id="@+id/notelist"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:isScrollContainer="false"/>
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:scrollbars="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#9E9E9E"/>
 
             </LinearLayout>
 
